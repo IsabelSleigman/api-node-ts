@@ -20,4 +20,11 @@ export class UserController{
         const users = userService.getAllUsers()
         return response.status(200).json(users)
     }
+
+    updateUser = (request: Request, response: Response) => {
+
+    }
+
+    deleteUser = (request: Request, response: Response) => {
+    }
 }

@@ -19,4 +19,12 @@ export class UserService{
     getAllUsers = () => {
         return db
     }
+
+    updateUser = () => {
+        
+    }
+
+    deleteUser = () => {
+
+    }
 }
