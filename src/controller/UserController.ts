@@ -6,11 +6,11 @@ export class UserController{
         const userService = new UserService()
         const user = request.body
 
-        if(!user.name){
+        if(!user.name || !user.email){
             return response.status(400).json({message: 'Bad request: Nome obrigatorio'})
         }
 
-        userService.creatUser(user.name, user.email)
+        userService.createUser(user.name, user.email)
         return response.status(201).json({message: 'Usuário criado com sucesso'})
     }
 
@@ -26,5 +26,8 @@ export class UserController{
     }
 
     deleteUser = (request: Request, response: Response) => {
+        const user = request.body
+        console.log('Deletando usuário...', user)
+        return response.status(200).json({message: 'Usuário deletado com sucesso'})
     }
 }

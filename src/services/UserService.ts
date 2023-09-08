@@ -6,7 +6,7 @@ const db = [
 ]
 
 export class UserService{
-    creatUser = (name: string , email: string)=> {
+    createUser = (name: string , email: string)=> {
         const user = {
             name,
             email,
