@@ -13,6 +13,7 @@ const db = [
 export class UserService{
     db: IUser[]
 
+    //injeção de dependencia
     constructor(dataBase = db){
         this.db = dataBase
     }
