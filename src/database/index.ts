@@ -5,6 +5,15 @@ export const AppDataSource = new DataSource({
     database:"./src/database/db.sqlite",
     migrations: [
     
-        "./src/database/migrations"
+        "./src/database/migrations/*.ts"
     ],
 })
+
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Conectado ao banco de dados!")
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+
