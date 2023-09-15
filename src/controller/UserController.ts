@@ -20,8 +20,13 @@ export class UserController{
         return response.status(201).json({message: 'Usuário criado com sucesso'})
     }
 
-    getUser = (request: Request, response: Response) => {
-        return response.status(200)
+    getUser = async (request: Request, response: Response) => {
+        const userId = request.params.userId
+        const user = await this.userService.getUser(userId)
+        if(user){
+            return response.status(200).json(user)
+        }
+        return response.status(404).json({message: 'Usuário não encontrado'})
     }
 
     updateUser = (request: Request, response: Response) => {

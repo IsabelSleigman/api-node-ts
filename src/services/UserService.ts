@@ -16,7 +16,8 @@ export class UserService{
         return this.userRepository.createUser(user);
     }
 
-    getUser = () => {
+    getUser = (idUser: string) => {
+        return this.userRepository.getUser(idUser)
     }
 
     updateUser = () => {

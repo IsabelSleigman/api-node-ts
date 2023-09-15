@@ -2,6 +2,7 @@ import { EntityManager } from 'typeorm/entity-manager/EntityManager';
 import { getMockEntityManager } from '../__mocks__/mockEntityManager.mock';
 import { User } from '../entities/User';
 import { UserRepository } from './UserRepository';
+import { UserModel } from '../models/UserModel';
 describe('UserRepository', () => {
 
     let userRepository: UserRepository
@@ -16,7 +17,8 @@ describe('UserRepository', () => {
 
     beforeAll( async () => {
         managerMock = await getMockEntityManager({
-            saveReturn: mockUser
+            saveReturn: mockUser,
+            findOneReturn: mockUser
         })
         userRepository = new UserRepository(managerMock as EntityManager)
     })
@@ -25,5 +27,16 @@ describe('UserRepository', () => {
         const response = await userRepository.createUser(mockUser)
         expect(managerMock.save).toHaveBeenCalled()
         expect(response).toMatchObject(mockUser)
+    })
+
+    it('Deve retornar usuario com id especifico', async () => {
+        const user: UserModel = {
+            name:mockUser.name,
+            email:mockUser.email,
+            userId:mockUser.id_user
+        }
+        const response = await userRepository.getUser(user.userId)
+        expect(managerMock.findOne).toHaveBeenCalled()
+        expect(response).toMatchObject(user)
     })
 })
