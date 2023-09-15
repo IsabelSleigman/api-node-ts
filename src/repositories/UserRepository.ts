@@ -1,6 +1,7 @@
 import { EntityManager } from "typeorm";
 import { User } from "../entities/User";
 import { UserModel } from "../models/UserModel";
+import { UserUpdateModel } from "../models/UserUpdateModel";
 
 export class UserRepository{
     private manager: EntityManager
@@ -29,5 +30,26 @@ export class UserRepository{
             return userModel
         }
         return user
+    }
+
+    updateUser = async ( userId: string, userUpdate: UserUpdateModel) =>{
+        await this.manager.createQueryBuilder()
+        .update(User)
+        .set({
+            name: userUpdate.name,
+            email: userUpdate.email,
+            password: userUpdate.password,
+        })
+        .where({id_user: userId})
+        .execute()
+    }
+
+    deleteUser = async (userId: string) => {
+        await this.manager
+        .createQueryBuilder()
+        .delete()
+        .from(User)
+        .where({id_user: userId})
+        .execute()
     }
 }

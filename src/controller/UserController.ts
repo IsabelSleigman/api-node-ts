@@ -26,16 +26,32 @@ export class UserController{
         if(user){
             return response.status(200).json(user)
         }
-        return response.status(404).json({message: 'Usuário não encontrado'})
+        return response.status(400).json({message: 'Usuário não encontrado'})
     }
 
-    updateUser = (request: Request, response: Response) => {
+    updateUser = async (request: Request, response: Response) => {
+        const userUpdate = request.body
+        const userId = request.params.userId
+
+        const user = await this.userService.getUser(userId)
+        if(user){
+            if(!userUpdate){
+                await this.userService.updateUser(userId, user)
+                return response.status(200).json({message: 'Usuário atualizado com sucesso'})
+            }
+            return response.status(400).json({message: 'Campos de alteração não enviados'})
+        }
+        return response.status(400).json({message: 'Usuário não encontrado'})
 
     }
 
-    deleteUser = (request: Request, response: Response) => {
-        const user = request.body
-        console.log('Deletando usuário...', user)
-        return response.status(200).json({message: 'Usuário deletado com sucesso'})
+    deleteUser = async (request: Request, response: Response) => {
+        const userId = request.params.userId
+        const user = await this.userService.getUser(userId)
+        if(user){
+            await this.userService.deleteUser(userId)
+            return response.status(200).json({message: 'Usuário deletado com sucesso'})
+        }
+        return response.status(400).json({message: 'Usuário não encontrado'})
     }
 }

@@ -1,5 +1,6 @@
 import { AppDataSource } from "../database";
 import { User } from "../entities/User";
+import { UserUpdateModel } from "../models/UserUpdateModel";
 import { UserRepository } from "../repositories/UserRepository"
 
 export class UserService{
@@ -20,11 +21,11 @@ export class UserService{
         return this.userRepository.getUser(idUser)
     }
 
-    updateUser = () => {
-        
+    updateUser = (idUser: string, userUpdate: UserUpdateModel) => {
+        return this.userRepository.updateUser(idUser, userUpdate)
     }
 
-    deleteUser = () => {
-
+    deleteUser = (idUser: string) => {
+        return this.userRepository.deleteUser(idUser)
     }
 }
